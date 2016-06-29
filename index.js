@@ -5,6 +5,7 @@ function StopWatch(callback) {
   this._callback = callback
 
   this.start = function (dilay) {
+    this._delay= 1000
     if (this._interval){return}
     this._interval = setInterval(this.addTime.bind(this), this._delay)
   }
@@ -15,7 +16,7 @@ function StopWatch(callback) {
   }
 
   this.reset = function (){
-    // this._delay= 0
+    this._delay= null
     this._time = 0
   }
 
