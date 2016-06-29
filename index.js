@@ -4,7 +4,7 @@ function StopWatch(callback) {
   this._delay= 1000
   this._callback = callback
 
-  this.start = function () {
+  this.start = function (dilay) {
     if (this._interval){return}
     this._interval = setInterval(this.addTime.bind(this), this._delay)
   }
@@ -14,16 +14,22 @@ function StopWatch(callback) {
     this._interval = null
   }
 
+  this.reset = function (){
+    // this._delay= 0
+    this._time = 0
+  }
+
   this.addTime = function() {
-    this._time = this._time + this._delay
+    this._time += this._delay
     this._callback(this._time)
+  }
+
+  this.pad = function(num, size) {
+    var s = "0000" + num;
+    return s.substr(s.length - size);
   }
 }
 
-function pad(num, size) {
-	var s = "0000" + num;
-	return s.substr(s.length - size);
-}
 
 // add code here
 $(document).ready(function() {
@@ -38,7 +44,7 @@ $(document).ready(function() {
   	newTime = newTime % (60 * 1000);
   	s = Math.floor( newTime / 1000 );
 
-  	times = pad(h, 2) + ':' + pad(m, 2) + ':' + pad(s, 2);
+  	times = this.pad(h, 2) + ':' + this.pad(m, 2) + ':' + this.pad(s, 2);
     display.text(times)
   })
 
@@ -57,10 +63,13 @@ $(document).ready(function() {
       //start the watch
       stopWatch.start()
       console.log("start watch");
-    } else {
+    } else if (button.hasClass('stop')) {
       //stop the watch
       console.log("stop watch");
-      stopWatch.stop()
+      stopWatch.stop();
+    } else {
+      console.log("reset watch");
+      stopWatch.reset();
     }
     // console.log(this); //the object you are interating with, in thiscase the button
     // console.log(event); //Event Object
