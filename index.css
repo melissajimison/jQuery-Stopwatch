@@ -27,3 +27,7 @@ body {
 #stopWatch button:active {
   background: rgb(253, 0, 254);
 }
+
+section {
+  display: inline-block;
+}
